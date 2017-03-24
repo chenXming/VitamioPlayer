@@ -1,0 +1,741 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5FFC2A731E84C277000460AB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2A721E84C277000460AB /* main.m */; };
+		5FFC2A761E84C277000460AB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2A751E84C277000460AB /* AppDelegate.m */; };
+		5FFC2A7C1E84C277000460AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2A7A1E84C277000460AB /* Main.storyboard */; };
+		5FFC2A7E1E84C277000460AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2A7D1E84C277000460AB /* Assets.xcassets */; };
+		5FFC2A811E84C277000460AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2A7F1E84C277000460AB /* LaunchScreen.storyboard */; };
+		5FFC2A8C1E84C277000460AB /* Vitamio_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2A8B1E84C277000460AB /* Vitamio_PlayerTests.m */; };
+		5FFC2A971E84C278000460AB /* Vitamio_PlayerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2A961E84C278000460AB /* Vitamio_PlayerUITests.m */; };
+		5FFC2AA61E84C2B9000460AB /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2AA51E84C2B9000460AB /* PlayerViewController.m */; };
+		5FFC2AA91E84C2D6000460AB /* VideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2AA81E84C2D6000460AB /* VideoViewController.m */; };
+		5FFC2ABA1E84C93C000460AB /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2AAB1E84C93C000460AB /* CHANGELOG.md */; };
+		5FFC2ABB1E84C93C000460AB /* libffmpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AB61E84C93C000460AB /* libffmpeg.a */; };
+		5FFC2ABC1E84C93C000460AB /* libopenssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AB71E84C93C000460AB /* libopenssl.a */; };
+		5FFC2ABD1E84C93C000460AB /* libVitamio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AB81E84C93C000460AB /* libVitamio.a */; };
+		5FFC2ABE1E84C93C000460AB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AB91E84C93C000460AB /* LICENSE */; };
+		5FFC2AC11E84C956000460AB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AC01E84C956000460AB /* AVFoundation.framework */; };
+		5FFC2AC31E84C95F000460AB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AC21E84C95F000460AB /* AudioToolbox.framework */; };
+		5FFC2AC51E84C969000460AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AC41E84C969000460AB /* CoreGraphics.framework */; };
+		5FFC2AC71E84C975000460AB /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AC61E84C975000460AB /* CoreMedia.framework */; };
+		5FFC2AC91E84C980000460AB /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AC81E84C980000460AB /* CoreVideo.framework */; };
+		5FFC2ACB1E84C988000460AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2ACA1E84C988000460AB /* Foundation.framework */; };
+		5FFC2ACD1E84C995000460AB /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2ACC1E84C995000460AB /* MediaPlayer.framework */; };
+		5FFC2ACF1E84C9A6000460AB /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2ACE1E84C9A6000460AB /* OpenGLES.framework */; };
+		5FFC2AD11E84C9B4000460AB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AD01E84C9B4000460AB /* QuartzCore.framework */; };
+		5FFC2AD31E84C9BC000460AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AD21E84C9BC000460AB /* UIKit.framework */; };
+		5FFC2AD51E84C9D7000460AB /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AD41E84C9D7000460AB /* libbz2.tbd */; };
+		5FFC2AD71E84C9E9000460AB /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AD61E84C9E9000460AB /* libz.tbd */; };
+		5FFC2AD91E84C9F4000460AB /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2AD81E84C9F4000460AB /* libstdc++.tbd */; };
+		5FFC2ADB1E84CA19000460AB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FFC2ADA1E84CA19000460AB /* libiconv.tbd */; };
+		5FFC2ADE1E84D062000460AB /* CXM_VitamioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFC2ADD1E84D062000460AB /* CXM_VitamioPlayer.m */; };
+		5FFC2AEC1E8504CB000460AB /* btn_barItem_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE01E8504CB000460AB /* btn_barItem_left@2x.png */; };
+		5FFC2AED1E8504CB000460AB /* btn_barItem_left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE11E8504CB000460AB /* btn_barItem_left@3x.png */; };
+		5FFC2AEE1E8504CB000460AB /* btn_barItem_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE21E8504CB000460AB /* btn_barItem_right@2x.png */; };
+		5FFC2AEF1E8504CB000460AB /* btn_barItem_right@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE31E8504CB000460AB /* btn_barItem_right@3x.png */; };
+		5FFC2AF01E8504CB000460AB /* btn_pause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE41E8504CB000460AB /* btn_pause@2x.png */; };
+		5FFC2AF11E8504CB000460AB /* btn_pause@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE51E8504CB000460AB /* btn_pause@3x.png */; };
+		5FFC2AF21E8504CB000460AB /* btn_pinch_expand@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE61E8504CB000460AB /* btn_pinch_expand@2x.png */; };
+		5FFC2AF31E8504CB000460AB /* btn_pinch_expand@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE71E8504CB000460AB /* btn_pinch_expand@3x.png */; };
+		5FFC2AF41E8504CB000460AB /* btn_pinch_shrink@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE81E8504CB000460AB /* btn_pinch_shrink@2x.png */; };
+		5FFC2AF51E8504CB000460AB /* btn_pinch_shrink@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AE91E8504CB000460AB /* btn_pinch_shrink@3x.png */; };
+		5FFC2AF61E8504CB000460AB /* btn_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AEA1E8504CB000460AB /* btn_play@2x.png */; };
+		5FFC2AF71E8504CB000460AB /* btn_play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FFC2AEB1E8504CB000460AB /* btn_play@3x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5FFC2A881E84C277000460AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FFC2A661E84C277000460AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5FFC2A6D1E84C277000460AB;
+			remoteInfo = Vitamio_Player;
+		};
+		5FFC2A931E84C278000460AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5FFC2A661E84C277000460AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5FFC2A6D1E84C277000460AB;
+			remoteInfo = Vitamio_Player;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5FFC2A6E1E84C277000460AB /* Vitamio_Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vitamio_Player.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FFC2A721E84C277000460AB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5FFC2A741E84C277000460AB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5FFC2A751E84C277000460AB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5FFC2A7B1E84C277000460AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5FFC2A7D1E84C277000460AB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5FFC2A801E84C277000460AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5FFC2A821E84C277000460AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FFC2A871E84C277000460AB /* Vitamio_PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Vitamio_PlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FFC2A8B1E84C277000460AB /* Vitamio_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vitamio_PlayerTests.m; sourceTree = "<group>"; };
+		5FFC2A8D1E84C277000460AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FFC2A921E84C278000460AB /* Vitamio_PlayerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Vitamio_PlayerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FFC2A961E84C278000460AB /* Vitamio_PlayerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Vitamio_PlayerUITests.m; sourceTree = "<group>"; };
+		5FFC2A981E84C278000460AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FFC2AA41E84C2B9000460AB /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		5FFC2AA51E84C2B9000460AB /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		5FFC2AA71E84C2D6000460AB /* VideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoViewController.h; sourceTree = "<group>"; };
+		5FFC2AA81E84C2D6000460AB /* VideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoViewController.m; sourceTree = "<group>"; };
+		5FFC2AAB1E84C93C000460AB /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
+		5FFC2AAE1E84C93C000460AB /* VDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDefines.h; sourceTree = "<group>"; };
+		5FFC2AAF1E84C93C000460AB /* Vitamio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vitamio.h; sourceTree = "<group>"; };
+		5FFC2AB01E84C93C000460AB /* VMediaExtracter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMediaExtracter.h; sourceTree = "<group>"; };
+		5FFC2AB11E84C93C000460AB /* VMediaExtracterDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMediaExtracterDef.h; sourceTree = "<group>"; };
+		5FFC2AB21E84C93C000460AB /* VMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMediaPlayer.h; sourceTree = "<group>"; };
+		5FFC2AB31E84C93C000460AB /* VMediaPlayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VMediaPlayerDelegate.h; sourceTree = "<group>"; };
+		5FFC2AB41E84C93C000460AB /* VPlayerManageDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VPlayerManageDef.h; sourceTree = "<group>"; };
+		5FFC2AB51E84C93C000460AB /* VSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSingleton.h; sourceTree = "<group>"; };
+		5FFC2AB61E84C93C000460AB /* libffmpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libffmpeg.a; sourceTree = "<group>"; };
+		5FFC2AB71E84C93C000460AB /* libopenssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libopenssl.a; sourceTree = "<group>"; };
+		5FFC2AB81E84C93C000460AB /* libVitamio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVitamio.a; sourceTree = "<group>"; };
+		5FFC2AB91E84C93C000460AB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		5FFC2AC01E84C956000460AB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5FFC2AC21E84C95F000460AB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5FFC2AC41E84C969000460AB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5FFC2AC61E84C975000460AB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5FFC2AC81E84C980000460AB /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		5FFC2ACA1E84C988000460AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5FFC2ACC1E84C995000460AB /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		5FFC2ACE1E84C9A6000460AB /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		5FFC2AD01E84C9B4000460AB /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5FFC2AD21E84C9BC000460AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5FFC2AD41E84C9D7000460AB /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		5FFC2AD61E84C9E9000460AB /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		5FFC2AD81E84C9F4000460AB /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		5FFC2ADA1E84CA19000460AB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		5FFC2ADC1E84D062000460AB /* CXM_VitamioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXM_VitamioPlayer.h; sourceTree = "<group>"; };
+		5FFC2ADD1E84D062000460AB /* CXM_VitamioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXM_VitamioPlayer.m; sourceTree = "<group>"; };
+		5FFC2AE01E8504CB000460AB /* btn_barItem_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_barItem_left@2x.png"; sourceTree = "<group>"; };
+		5FFC2AE11E8504CB000460AB /* btn_barItem_left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_barItem_left@3x.png"; sourceTree = "<group>"; };
+		5FFC2AE21E8504CB000460AB /* btn_barItem_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_barItem_right@2x.png"; sourceTree = "<group>"; };
+		5FFC2AE31E8504CB000460AB /* btn_barItem_right@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_barItem_right@3x.png"; sourceTree = "<group>"; };
+		5FFC2AE41E8504CB000460AB /* btn_pause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pause@2x.png"; sourceTree = "<group>"; };
+		5FFC2AE51E8504CB000460AB /* btn_pause@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pause@3x.png"; sourceTree = "<group>"; };
+		5FFC2AE61E8504CB000460AB /* btn_pinch_expand@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pinch_expand@2x.png"; sourceTree = "<group>"; };
+		5FFC2AE71E8504CB000460AB /* btn_pinch_expand@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pinch_expand@3x.png"; sourceTree = "<group>"; };
+		5FFC2AE81E8504CB000460AB /* btn_pinch_shrink@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pinch_shrink@2x.png"; sourceTree = "<group>"; };
+		5FFC2AE91E8504CB000460AB /* btn_pinch_shrink@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_pinch_shrink@3x.png"; sourceTree = "<group>"; };
+		5FFC2AEA1E8504CB000460AB /* btn_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_play@2x.png"; sourceTree = "<group>"; };
+		5FFC2AEB1E8504CB000460AB /* btn_play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_play@3x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5FFC2A6B1E84C277000460AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FFC2ADB1E84CA19000460AB /* libiconv.tbd in Frameworks */,
+				5FFC2AD91E84C9F4000460AB /* libstdc++.tbd in Frameworks */,
+				5FFC2AD71E84C9E9000460AB /* libz.tbd in Frameworks */,
+				5FFC2AD51E84C9D7000460AB /* libbz2.tbd in Frameworks */,
+				5FFC2AD31E84C9BC000460AB /* UIKit.framework in Frameworks */,
+				5FFC2AD11E84C9B4000460AB /* QuartzCore.framework in Frameworks */,
+				5FFC2ACF1E84C9A6000460AB /* OpenGLES.framework in Frameworks */,
+				5FFC2ACD1E84C995000460AB /* MediaPlayer.framework in Frameworks */,
+				5FFC2ACB1E84C988000460AB /* Foundation.framework in Frameworks */,
+				5FFC2AC91E84C980000460AB /* CoreVideo.framework in Frameworks */,
+				5FFC2AC71E84C975000460AB /* CoreMedia.framework in Frameworks */,
+				5FFC2AC51E84C969000460AB /* CoreGraphics.framework in Frameworks */,
+				5FFC2AC31E84C95F000460AB /* AudioToolbox.framework in Frameworks */,
+				5FFC2AC11E84C956000460AB /* AVFoundation.framework in Frameworks */,
+				5FFC2ABC1E84C93C000460AB /* libopenssl.a in Frameworks */,
+				5FFC2ABB1E84C93C000460AB /* libffmpeg.a in Frameworks */,
+				5FFC2ABD1E84C93C000460AB /* libVitamio.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A841E84C277000460AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A8F1E84C278000460AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5FFC2A651E84C277000460AB = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A701E84C277000460AB /* Vitamio_Player */,
+				5FFC2A8A1E84C277000460AB /* Vitamio_PlayerTests */,
+				5FFC2A951E84C278000460AB /* Vitamio_PlayerUITests */,
+				5FFC2A6F1E84C277000460AB /* Products */,
+				5FFC2ABF1E84C956000460AB /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5FFC2A6F1E84C277000460AB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A6E1E84C277000460AB /* Vitamio_Player.app */,
+				5FFC2A871E84C277000460AB /* Vitamio_PlayerTests.xctest */,
+				5FFC2A921E84C278000460AB /* Vitamio_PlayerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5FFC2A701E84C277000460AB /* Vitamio_Player */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A741E84C277000460AB /* AppDelegate.h */,
+				5FFC2A751E84C277000460AB /* AppDelegate.m */,
+				5FFC2AA41E84C2B9000460AB /* PlayerViewController.h */,
+				5FFC2AA51E84C2B9000460AB /* PlayerViewController.m */,
+				5FFC2AA71E84C2D6000460AB /* VideoViewController.h */,
+				5FFC2AA81E84C2D6000460AB /* VideoViewController.m */,
+				5FFC2ADC1E84D062000460AB /* CXM_VitamioPlayer.h */,
+				5FFC2ADD1E84D062000460AB /* CXM_VitamioPlayer.m */,
+				5FFC2ADF1E8504CB000460AB /* Image */,
+				5FFC2AAA1E84C93C000460AB /* Vitamio */,
+				5FFC2A7A1E84C277000460AB /* Main.storyboard */,
+				5FFC2A7D1E84C277000460AB /* Assets.xcassets */,
+				5FFC2A7F1E84C277000460AB /* LaunchScreen.storyboard */,
+				5FFC2A821E84C277000460AB /* Info.plist */,
+				5FFC2A711E84C277000460AB /* Supporting Files */,
+			);
+			path = Vitamio_Player;
+			sourceTree = "<group>";
+		};
+		5FFC2A711E84C277000460AB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A721E84C277000460AB /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5FFC2A8A1E84C277000460AB /* Vitamio_PlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A8B1E84C277000460AB /* Vitamio_PlayerTests.m */,
+				5FFC2A8D1E84C277000460AB /* Info.plist */,
+			);
+			path = Vitamio_PlayerTests;
+			sourceTree = "<group>";
+		};
+		5FFC2A951E84C278000460AB /* Vitamio_PlayerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2A961E84C278000460AB /* Vitamio_PlayerUITests.m */,
+				5FFC2A981E84C278000460AB /* Info.plist */,
+			);
+			path = Vitamio_PlayerUITests;
+			sourceTree = "<group>";
+		};
+		5FFC2AAA1E84C93C000460AB /* Vitamio */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2AAB1E84C93C000460AB /* CHANGELOG.md */,
+				5FFC2AAC1E84C93C000460AB /* include */,
+				5FFC2AB61E84C93C000460AB /* libffmpeg.a */,
+				5FFC2AB71E84C93C000460AB /* libopenssl.a */,
+				5FFC2AB81E84C93C000460AB /* libVitamio.a */,
+				5FFC2AB91E84C93C000460AB /* LICENSE */,
+			);
+			path = Vitamio;
+			sourceTree = "<group>";
+		};
+		5FFC2AAC1E84C93C000460AB /* include */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2AAD1E84C93C000460AB /* Vitamio */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		5FFC2AAD1E84C93C000460AB /* Vitamio */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2AAE1E84C93C000460AB /* VDefines.h */,
+				5FFC2AAF1E84C93C000460AB /* Vitamio.h */,
+				5FFC2AB01E84C93C000460AB /* VMediaExtracter.h */,
+				5FFC2AB11E84C93C000460AB /* VMediaExtracterDef.h */,
+				5FFC2AB21E84C93C000460AB /* VMediaPlayer.h */,
+				5FFC2AB31E84C93C000460AB /* VMediaPlayerDelegate.h */,
+				5FFC2AB41E84C93C000460AB /* VPlayerManageDef.h */,
+				5FFC2AB51E84C93C000460AB /* VSingleton.h */,
+			);
+			path = Vitamio;
+			sourceTree = "<group>";
+		};
+		5FFC2ABF1E84C956000460AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2ADA1E84CA19000460AB /* libiconv.tbd */,
+				5FFC2AD81E84C9F4000460AB /* libstdc++.tbd */,
+				5FFC2AD61E84C9E9000460AB /* libz.tbd */,
+				5FFC2AD41E84C9D7000460AB /* libbz2.tbd */,
+				5FFC2AD21E84C9BC000460AB /* UIKit.framework */,
+				5FFC2AD01E84C9B4000460AB /* QuartzCore.framework */,
+				5FFC2ACE1E84C9A6000460AB /* OpenGLES.framework */,
+				5FFC2ACC1E84C995000460AB /* MediaPlayer.framework */,
+				5FFC2ACA1E84C988000460AB /* Foundation.framework */,
+				5FFC2AC81E84C980000460AB /* CoreVideo.framework */,
+				5FFC2AC61E84C975000460AB /* CoreMedia.framework */,
+				5FFC2AC41E84C969000460AB /* CoreGraphics.framework */,
+				5FFC2AC21E84C95F000460AB /* AudioToolbox.framework */,
+				5FFC2AC01E84C956000460AB /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5FFC2ADF1E8504CB000460AB /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				5FFC2AE01E8504CB000460AB /* btn_barItem_left@2x.png */,
+				5FFC2AE11E8504CB000460AB /* btn_barItem_left@3x.png */,
+				5FFC2AE21E8504CB000460AB /* btn_barItem_right@2x.png */,
+				5FFC2AE31E8504CB000460AB /* btn_barItem_right@3x.png */,
+				5FFC2AE41E8504CB000460AB /* btn_pause@2x.png */,
+				5FFC2AE51E8504CB000460AB /* btn_pause@3x.png */,
+				5FFC2AE61E8504CB000460AB /* btn_pinch_expand@2x.png */,
+				5FFC2AE71E8504CB000460AB /* btn_pinch_expand@3x.png */,
+				5FFC2AE81E8504CB000460AB /* btn_pinch_shrink@2x.png */,
+				5FFC2AE91E8504CB000460AB /* btn_pinch_shrink@3x.png */,
+				5FFC2AEA1E8504CB000460AB /* btn_play@2x.png */,
+				5FFC2AEB1E8504CB000460AB /* btn_play@3x.png */,
+			);
+			path = Image;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5FFC2A6D1E84C277000460AB /* Vitamio_Player */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FFC2A9B1E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_Player" */;
+			buildPhases = (
+				5FFC2A6A1E84C277000460AB /* Sources */,
+				5FFC2A6B1E84C277000460AB /* Frameworks */,
+				5FFC2A6C1E84C277000460AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Vitamio_Player;
+			productName = Vitamio_Player;
+			productReference = 5FFC2A6E1E84C277000460AB /* Vitamio_Player.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5FFC2A861E84C277000460AB /* Vitamio_PlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FFC2A9E1E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_PlayerTests" */;
+			buildPhases = (
+				5FFC2A831E84C277000460AB /* Sources */,
+				5FFC2A841E84C277000460AB /* Frameworks */,
+				5FFC2A851E84C277000460AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5FFC2A891E84C277000460AB /* PBXTargetDependency */,
+			);
+			name = Vitamio_PlayerTests;
+			productName = Vitamio_PlayerTests;
+			productReference = 5FFC2A871E84C277000460AB /* Vitamio_PlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5FFC2A911E84C278000460AB /* Vitamio_PlayerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FFC2AA11E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_PlayerUITests" */;
+			buildPhases = (
+				5FFC2A8E1E84C278000460AB /* Sources */,
+				5FFC2A8F1E84C278000460AB /* Frameworks */,
+				5FFC2A901E84C278000460AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5FFC2A941E84C278000460AB /* PBXTargetDependency */,
+			);
+			name = Vitamio_PlayerUITests;
+			productName = Vitamio_PlayerUITests;
+			productReference = 5FFC2A921E84C278000460AB /* Vitamio_PlayerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5FFC2A661E84C277000460AB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "陈小明";
+				TargetAttributes = {
+					5FFC2A6D1E84C277000460AB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H588V6S763;
+						ProvisioningStyle = Automatic;
+					};
+					5FFC2A861E84C277000460AB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H588V6S763;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5FFC2A6D1E84C277000460AB;
+					};
+					5FFC2A911E84C278000460AB = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = H588V6S763;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 5FFC2A6D1E84C277000460AB;
+					};
+				};
+			};
+			buildConfigurationList = 5FFC2A691E84C277000460AB /* Build configuration list for PBXProject "Vitamio_Player" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5FFC2A651E84C277000460AB;
+			productRefGroup = 5FFC2A6F1E84C277000460AB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5FFC2A6D1E84C277000460AB /* Vitamio_Player */,
+				5FFC2A861E84C277000460AB /* Vitamio_PlayerTests */,
+				5FFC2A911E84C278000460AB /* Vitamio_PlayerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5FFC2A6C1E84C277000460AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FFC2A811E84C277000460AB /* LaunchScreen.storyboard in Resources */,
+				5FFC2AEC1E8504CB000460AB /* btn_barItem_left@2x.png in Resources */,
+				5FFC2AF41E8504CB000460AB /* btn_pinch_shrink@2x.png in Resources */,
+				5FFC2AEF1E8504CB000460AB /* btn_barItem_right@3x.png in Resources */,
+				5FFC2AF51E8504CB000460AB /* btn_pinch_shrink@3x.png in Resources */,
+				5FFC2AEE1E8504CB000460AB /* btn_barItem_right@2x.png in Resources */,
+				5FFC2AF71E8504CB000460AB /* btn_play@3x.png in Resources */,
+				5FFC2AED1E8504CB000460AB /* btn_barItem_left@3x.png in Resources */,
+				5FFC2AF61E8504CB000460AB /* btn_play@2x.png in Resources */,
+				5FFC2A7E1E84C277000460AB /* Assets.xcassets in Resources */,
+				5FFC2AF01E8504CB000460AB /* btn_pause@2x.png in Resources */,
+				5FFC2ABE1E84C93C000460AB /* LICENSE in Resources */,
+				5FFC2AF21E8504CB000460AB /* btn_pinch_expand@2x.png in Resources */,
+				5FFC2AF31E8504CB000460AB /* btn_pinch_expand@3x.png in Resources */,
+				5FFC2A7C1E84C277000460AB /* Main.storyboard in Resources */,
+				5FFC2AF11E8504CB000460AB /* btn_pause@3x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A851E84C277000460AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A901E84C278000460AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5FFC2A6A1E84C277000460AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FFC2A761E84C277000460AB /* AppDelegate.m in Sources */,
+				5FFC2ABA1E84C93C000460AB /* CHANGELOG.md in Sources */,
+				5FFC2A731E84C277000460AB /* main.m in Sources */,
+				5FFC2AA91E84C2D6000460AB /* VideoViewController.m in Sources */,
+				5FFC2AA61E84C2B9000460AB /* PlayerViewController.m in Sources */,
+				5FFC2ADE1E84D062000460AB /* CXM_VitamioPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A831E84C277000460AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FFC2A8C1E84C277000460AB /* Vitamio_PlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5FFC2A8E1E84C278000460AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FFC2A971E84C278000460AB /* Vitamio_PlayerUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5FFC2A891E84C277000460AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5FFC2A6D1E84C277000460AB /* Vitamio_Player */;
+			targetProxy = 5FFC2A881E84C277000460AB /* PBXContainerItemProxy */;
+		};
+		5FFC2A941E84C278000460AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5FFC2A6D1E84C277000460AB /* Vitamio_Player */;
+			targetProxy = 5FFC2A931E84C278000460AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5FFC2A7A1E84C277000460AB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FFC2A7B1E84C277000460AB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5FFC2A7F1E84C277000460AB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FFC2A801E84C277000460AB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5FFC2A991E84C278000460AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5FFC2A9A1E84C278000460AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5FFC2A9C1E84C278000460AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_Player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vitamio_Player/Vitamio",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-Player";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5FFC2A9D1E84C278000460AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_Player/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Vitamio_Player/Vitamio",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-Player";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5FFC2A9F1E84C278000460AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_PlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-PlayerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vitamio_Player.app/Vitamio_Player";
+			};
+			name = Debug;
+		};
+		5FFC2AA01E84C278000460AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_PlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-PlayerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vitamio_Player.app/Vitamio_Player";
+			};
+			name = Release;
+		};
+		5FFC2AA21E84C278000460AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_PlayerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-PlayerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Vitamio_Player;
+			};
+			name = Debug;
+		};
+		5FFC2AA31E84C278000460AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = H588V6S763;
+				INFOPLIST_FILE = Vitamio_PlayerUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-PlayerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Vitamio_Player;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5FFC2A691E84C277000460AB /* Build configuration list for PBXProject "Vitamio_Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FFC2A991E84C278000460AB /* Debug */,
+				5FFC2A9A1E84C278000460AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5FFC2A9B1E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_Player" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FFC2A9C1E84C278000460AB /* Debug */,
+				5FFC2A9D1E84C278000460AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5FFC2A9E1E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_PlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FFC2A9F1E84C278000460AB /* Debug */,
+				5FFC2AA01E84C278000460AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5FFC2AA11E84C278000460AB /* Build configuration list for PBXNativeTarget "Vitamio_PlayerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FFC2AA21E84C278000460AB /* Debug */,
+				5FFC2AA31E84C278000460AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5FFC2A661E84C277000460AB /* Project object */;
+}

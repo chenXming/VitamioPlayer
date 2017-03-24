@@ -44,3 +44,4 @@ mMPayer = [VMediaPlayer sharedInstance];
 ```OC
 [mMPayer unSetupPlayer];
 ```
+Vitamio官方地址：[Vitamio](https://www.vitamio.org/Download) 觉得好用就给个star吧^_^

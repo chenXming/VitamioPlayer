@@ -11,7 +11,7 @@
 #import <MediaPlayer/MPVolumeView.h>// 音量控制
 #import "AppDelegate.h"
 
-@interface CXM_VitamioPlayer()<VMediaPlayerDelegate>
+@interface CXM_VitamioPlayer()<VMediaPlayerDelegate,UIGestureRecognizerDelegate>
 {
 
     
@@ -53,8 +53,11 @@
     //是否显示工具栏
     BOOL isShowToolBar;
     
+    CGPoint _currentPoint;
+    float _systemVolume; // 系统声音大小
+    BOOL _isComplate;// 播放完成
+    BOOL _isGes;// 滑动手势只执行一次
     MPVolumeView *volumeView ;// 不显示系统音量提示
-
     
     UIImageView *blightView;// 明暗提示图
     UIImageView *voiceView; // 音量提示图
@@ -124,8 +127,14 @@
     
     [self makeVideoTool];
     
+    // 点击手势
     UITapGestureRecognizer* tapVieoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVideoViewEvent)];
     [self addGestureRecognizer:tapVieoGesture];
+    
+    // 添加滑动手势
+    UIPanGestureRecognizer  *panGesture=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureDown:)];
+    panGesture.delegate=self;
+    [self addGestureRecognizer:panGesture];
     
 }
 -(void)makeVideoTool{
@@ -141,6 +150,13 @@
     [videoheadbarView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]];
     videoheadbarView.userInteractionEnabled =YES;
     [self addSubview:videoheadbarView];
+    
+    //视频播放activity
+    videoActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    // videoActivityIndicatorView.backgroundColor = [UIColor lightGrayColor];
+    [videoActivityIndicatorView setCenter:self.center];
+    [self addSubview:videoActivityIndicatorView];
+    
     //播放缓存时间label
     bufferTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 2 + 20, SCREEN_WIDTH, 14)];
     [bufferTimeLabel setBackgroundColor:[UIColor clearColor]];
@@ -148,11 +164,7 @@
     [bufferTimeLabel setFont:[UIFont systemFontOfSize:14]];
     [bufferTimeLabel setTextAlignment:NSTextAlignmentCenter];
     [self addSubview:bufferTimeLabel];
-    //视频播放activity
-    videoActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-   // videoActivityIndicatorView.backgroundColor = [UIColor lightGrayColor];
-    [videoActivityIndicatorView setCenter:self.center];
-    [self addSubview:videoActivityIndicatorView];
+   
     
     
     //添加视频播放按钮
@@ -219,8 +231,50 @@
     [currentTimeLabel setText:@"00:00:00/"];
     [videoToolbarView addSubview:currentTimeLabel];
 
-    
+    // 隐藏系统音量显示
+    volumeView=[MPVolumeView new];
+    volumeView.frame = CGRectMake(-1000, -1000, 60, 60);
+    [self addSubview:volumeView];
+    // 明亮和音量控制View
+    [self makeBlightAndVolumeView];
 }
+-(void)makeBlightAndVolumeView{
+    
+    UIImage *blightImage = [UIImage imageNamed:@"blight"];
+    UIImage *voiceImage = [UIImage imageNamed:@"volume"];
+    
+    blightView =[[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT-150)/2,(SCREEN_WIDTH-150)/2, 150, 150)];
+    blightView.image =blightImage;
+    blightView.alpha=0.0;
+    blightView.backgroundColor =[UIColor clearColor];
+    [self addSubview:blightView];
+    
+    voiceView =[[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_HEIGHT-150)/2,(SCREEN_WIDTH-150)/2, 150, 150)];
+    voiceView.image =voiceImage;
+    voiceView.alpha=0.0;
+    voiceView.backgroundColor =[UIColor clearColor];
+    [self addSubview:voiceView];
+    
+    blightPtogress =[[UIProgressView alloc] initWithFrame:CGRectMake(20,blightView.frame.size.height-20,blightView.frame.size.width-40,20)];
+    blightPtogress.backgroundColor = [UIColor clearColor];
+    blightPtogress.trackTintColor =[UIColor blackColor];
+    blightPtogress.progressTintColor =[UIColor whiteColor];
+    blightPtogress.progress =0.5f;
+    // 改变进度条的粗细
+    blightPtogress.transform = CGAffineTransformMakeScale(1.0f,2.0f);
+    blightPtogress.progressViewStyle=UIProgressViewStyleBar;
+    [blightView addSubview:blightPtogress];
+    
+    volumeProgress =[[UIProgressView alloc] initWithFrame:CGRectMake(20,blightView.frame.size.height-20,blightView.frame.size.width-40,20)];
+    volumeProgress.backgroundColor = [UIColor clearColor];
+    volumeProgress.trackTintColor =[UIColor blackColor];
+    volumeProgress.progress =0.5f;
+    volumeProgress.transform = CGAffineTransformMakeScale(1.0f,2.0f);
+    volumeProgress.progressViewStyle=UIProgressViewStyleBar;
+    volumeProgress.progressTintColor =[UIColor whiteColor];
+    [voiceView addSubview:volumeProgress];
+}
+
 - (void)tapVideoViewEvent{
     if (isShowToolBar) {
         //显示工具栏 进行隐藏
@@ -240,6 +294,161 @@
         rateView.hidden=NO;
     }
 }
+#pragma mark - 手势代理 解决手势冲突问题,不要忘记添加代理delegate
+-(BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch{
+    
+    // NSLog(@"touch.view=====%@",touch.view);
+    if([touch.view isKindOfClass:[UISlider class]]){
+        return NO;
+    }else{
+        return YES;
+    }
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    _currentPoint = [[touches anyObject] locationInView:self];
+}
+
+-(void)panGestureDown:(UIPanGestureRecognizer*)sender{
+    
+    if(isFullScreen==NO){
+        return;// 只有横屏才可以添加手势
+    }
+    
+    CGPoint point= [sender locationInView:self];
+    
+    typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
+        UIPanGestureRecognizerDirectionUndefined,
+        UIPanGestureRecognizerDirectionUp,
+        UIPanGestureRecognizerDirectionDown,
+        UIPanGestureRecognizerDirectionLeft,
+        UIPanGestureRecognizerDirectionRight
+    };
+    static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
+    switch (sender.state) {
+        case UIGestureRecognizerStateBegan: {
+            if (direction == UIPanGestureRecognizerDirectionUndefined) {
+                CGPoint velocity = [sender velocityInView:self];
+                BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
+                if (isVerticalGesture) {
+                    if (velocity.y > 0) {
+                        direction = UIPanGestureRecognizerDirectionDown;
+                    } else {
+                        direction = UIPanGestureRecognizerDirectionUp;
+                    }
+                }
+                else {
+                    if (velocity.x > 0) {
+                        direction = UIPanGestureRecognizerDirectionRight;
+                    } else {
+                        direction = UIPanGestureRecognizerDirectionLeft;
+                    }
+                }
+            }
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            
+            switch (direction) {
+                case UIPanGestureRecognizerDirectionUp: {
+                    
+                    float dy = point.y - _currentPoint.y;
+                    int index = (int)dy;
+                    // 左侧 上下改变亮度
+                    if(_currentPoint.x <self.frame.size.width/2){
+                        blightView.alpha =1.0f;
+                        if(index >0){
+                            [UIScreen mainScreen].brightness = [UIScreen mainScreen].brightness- 0.01;
+                        }else{
+                            [UIScreen mainScreen].brightness = [UIScreen mainScreen].brightness+ 0.01;
+                        }
+                        blightPtogress.progress =[UIScreen mainScreen].brightness;
+                    }else{// 右侧上下改变声音
+                        voiceView.alpha =1.0f;
+                        if(index>0){
+                            [self setVolumeDown];
+                        }else{
+                            [self setVolumeUp];
+                        }
+                        volumeProgress.progress =_systemVolume;
+                    }
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionDown: {
+                    
+                    float dy = point.y - _currentPoint.y;
+                    int index = (int)dy;
+                    // 左侧 上下改变亮度
+                    if(_currentPoint.x <self.frame.size.width/2){
+                        blightView.alpha =1.0f;
+                        if(index >0){
+                            [UIScreen mainScreen].brightness = [UIScreen mainScreen].brightness- 0.01;
+                        }else{
+                            [UIScreen mainScreen].brightness = [UIScreen mainScreen].brightness+ 0.01;
+                        }
+                        blightPtogress.progress =[UIScreen mainScreen].brightness;
+                    }else{// 右侧上下改变声音
+                        voiceView.alpha =1.0f;
+                        if(index>0){
+                            [self setVolumeDown];
+                        }else{
+                            [self setVolumeUp];
+                        }
+                        volumeProgress.progress =_systemVolume;
+                    }
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionLeft: {
+                    if(_isGes ==NO){
+                        NSLog(@"Left");
+                        _isGes =YES;
+                        self.progressDragging = YES;
+                        [mMplayer seekTo:(long)mCurPosition-15000];
+                        currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
+                    }
+                    break;
+                }
+                case UIPanGestureRecognizerDirectionRight: {
+                    if(_isGes ==NO){
+                        NSLog(@"Right");
+                        _isGes = YES;
+                        self.progressDragging = YES;
+                        [mMplayer seekTo:(long)mCurPosition+15000];// 毫秒
+                        currentTimeLabel.text = [NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
+                    }
+                    break;
+                }
+                default: {
+                    break;
+                }
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            _isGes =NO;
+            NSLog(@"end");
+            direction = UIPanGestureRecognizerDirectionUndefined;
+            [UIView animateWithDuration:0.5f animations:^{
+                blightView.alpha =0.0f;
+                voiceView.alpha=0.0f;
+            }];
+            break;
+        }
+        default:
+            break;
+    }
+}
+-(void)setVolumeUp
+{
+    _systemVolume = _systemVolume+0.01;
+    [mMplayer setVolume:_systemVolume];
+}
+-(void)setVolumeDown{
+    
+    _systemVolume = _systemVolume-0.01;
+    [mMplayer setVolume:_systemVolume];
+}
+
 #pragma mark - 缓冲label
 - (void)startActivityWithMsg:(NSString *)msg{
     bufferTimeLabel.hidden = NO;
@@ -323,7 +532,6 @@
     isFullScreen = YES;
 
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
-  
     appdelegate.nav.navigationBarHidden = YES;
 
     [self setTransform:CGAffineTransformMakeRotation(M_PI_2)];
@@ -343,7 +551,6 @@
     isFullScreen = NO;
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    
     appdelegate.nav.navigationBarHidden = NO;
 
     
@@ -430,7 +637,6 @@
     [playOrPauseButton setImage:btnPauseImage forState:UIControlStateNormal];// 改变播放按钮图片
 }
 - (void)mediaPlayer:(VMediaPlayer *)player playbackComplete:(id)arg{
-    
     
     [self stopMediaPlayer];
 }

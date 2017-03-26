@@ -50,7 +50,9 @@
     BOOL isBack;
     // 全凭按钮
     BOOL isFullScreen;
-
+    //是否显示工具栏
+    BOOL isShowToolBar;
+    
     MPVolumeView *volumeView ;// 不显示系统音量提示
 
     
@@ -99,6 +101,7 @@
     isFullScreen = NO;
     isPlay = YES;
     _progressDragging = NO;
+    isShowToolBar = YES;
 }
 -(void)makeMianUI{
 
@@ -115,7 +118,10 @@
     [self startMediaPlayer];
     
     [self makeVideoTool];
-
+    
+    UITapGestureRecognizer* tapVieoGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapVideoViewEvent)];
+    [self addGestureRecognizer:tapVieoGesture];
+    
 }
 -(void)makeVideoTool{
   
@@ -196,9 +202,28 @@
     [currentTimeLabel setText:@"00:00:00/"];
     [videoToolbarView addSubview:currentTimeLabel];
 
-
     
 }
+- (void)tapVideoViewEvent{
+    if (isShowToolBar) {
+        //显示工具栏 进行隐藏
+        videoToolbarView.hidden = YES;
+        videoheadbarView.hidden =YES;
+      //  backButton.hidden = YES;
+        titleLabel.hidden=YES;
+        isShowToolBar = NO;
+        rateView.hidden=YES;
+    }else{
+        //工具栏被隐藏 显示出来
+        videoToolbarView.hidden = NO;
+        videoheadbarView.hidden =NO;
+      //  backButton.hidden = NO;
+        titleLabel.hidden=NO;
+        isShowToolBar = YES;
+        rateView.hidden=NO;
+    }
+}
+#pragma mark - 开始于结束控制
 -(void)startMediaPlayer{
 
 

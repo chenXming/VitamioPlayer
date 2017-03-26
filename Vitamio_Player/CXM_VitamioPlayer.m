@@ -39,6 +39,10 @@
     UILabel* currentTimeLabel;
     UILabel* allTimeLabel;
     UILabel* titleLabel;// 标题
+    //设置同步nstimer以及播放进度时间
+    NSTimer* mSyncSeekTimer;
+    long mDuration;
+    long mCurPosition;
     
     //播放或暂停
     BOOL isPlay;
@@ -61,6 +65,10 @@
     AppDelegate *appdelegate;
 
 }
+// 是否正在拖拽
+@property (nonatomic, assign) BOOL progressDragging;
+
+
 @end
 
 @implementation CXM_VitamioPlayer
@@ -69,6 +77,8 @@
 #define SCREEN_WIDTH     [UIScreen mainScreen].bounds.size.width
 
 #define SCREEN_HEIGHT   [UIScreen mainScreen].bounds.size.height
+#define RGBACOLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)]
+
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -88,7 +98,7 @@
     appdelegate =(AppDelegate*) [UIApplication sharedApplication].delegate;
     isFullScreen = NO;
     isPlay = YES;
-
+    _progressDragging = NO;
 }
 -(void)makeMianUI{
 
@@ -139,6 +149,55 @@
     [pinchButton addTarget:self action:@selector(clickPinchButton:) forControlEvents:UIControlEventTouchUpInside];
     [videoToolbarView addSubview:pinchButton];
     
+    //进度条
+    CGRect sliderFrame = CGRectMake(50, 13, SCREEN_WIDTH - 102, 2);
+    videoProgressView = [[UIView alloc] initWithFrame:sliderFrame];
+    [videoProgressView setBackgroundColor:RGBACOLOR(53, 53, 63, 1)];
+    [videoToolbarView addSubview:videoProgressView];
+    
+    UIImage* sliderBallImage = [UIImage imageNamed:@"slider_ball"];
+    UIImage* sliderLeftImage = [UIImage imageNamed:@"slider_left"];
+    UIImage* sliderRightImage = [UIImage imageNamed:@"slider_right"];
+    
+    
+    sliderFrame = CGRectMake(48, 1, SCREEN_WIDTH - 48 * 2, 25);
+    videoSlider = [[UISlider alloc] initWithFrame:sliderFrame];
+    //  videoSlider.backgroundColor =[UIColor redColor];
+    [videoSlider setThumbImage:sliderBallImage forState:UIControlStateNormal];
+    [videoSlider setMinimumTrackImage:sliderLeftImage forState:UIControlStateNormal];
+    [videoSlider setMaximumTrackImage:sliderRightImage forState:UIControlStateNormal];
+    
+    [videoSlider addTarget:self action:@selector(progressSliderUpAction:) forControlEvents:UIControlEventTouchCancel];
+    [videoSlider addTarget:self action:@selector(progressSliderDownAction:) forControlEvents:UIControlEventTouchDown];
+    [videoSlider addTarget:self action:@selector(progressSliderUpAction:) forControlEvents:UIControlEventTouchUpInside];
+    [videoSlider addTarget:self action:@selector(dragProgressSliderAction:) forControlEvents:UIControlEventValueChanged];
+    [videoToolbarView addSubview:videoSlider];
+
+    //时间值
+    CGFloat currentY = 22;
+    // 总时间
+    allTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 50 - 100, currentY, 100, 9)];
+    [allTimeLabel setFont:[UIFont systemFontOfSize:9]];
+    [allTimeLabel setBackgroundColor:[UIColor clearColor]];
+    [allTimeLabel setTextColor: [UIColor whiteColor]];
+
+    [allTimeLabel sizeToFit];
+    
+    CGRect allTimeFrame = allTimeLabel.frame;
+    allTimeFrame.origin.x = SCREEN_WIDTH - 50 - allTimeLabel.frame.size.width;
+    allTimeLabel.frame = allTimeFrame;
+    [videoToolbarView addSubview:allTimeLabel];
+    
+    // 当前时间
+    currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(allTimeFrame.origin.x - 85,currentY,100,9)];
+    [currentTimeLabel setFont:[UIFont systemFontOfSize:9]];
+    [currentTimeLabel setBackgroundColor:[UIColor clearColor]];
+    [currentTimeLabel setTextColor:[UIColor whiteColor]];
+    [currentTimeLabel setText:@"00:00:00/"];
+    [videoToolbarView addSubview:currentTimeLabel];
+
+
+    
 }
 -(void)startMediaPlayer{
 
@@ -152,14 +211,29 @@
     
     [mMplayer reset];
     isBack = YES;
-//    [mSyncSeekTimer invalidate];
-//    mSyncSeekTimer = nil;
+    [mSyncSeekTimer invalidate];
+    mSyncSeekTimer = nil;
     [UIApplication sharedApplication].idleTimerDisabled = NO;
 //    [self stopActivity];
     [mMplayer unSetupPlayer];
-//    [currentTimeLabel setText:@"00:00:00/"];
-//    videoSlider.value=0.0;
+    [currentTimeLabel setText:@"00:00:00/"];
+    videoSlider.value=0.0;
 }
+#pragma mark - Slider value
+- (void)progressSliderUpAction:(id)sender{
+    UISlider* sld = (UISlider*)sender;
+    
+    [mMplayer seekTo:(long)(sld.value * mDuration)];
+}
+- (void)progressSliderDownAction:(id)sender{
+    self.progressDragging = YES;
+}
+- (void)dragProgressSliderAction:(id)sender{
+    UISlider* sld = (UISlider*)sender;
+    
+    currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:(long)(sld.value * mCurPosition)]];
+}
+
 #pragma mark- Click Event
 - (void)clickPinchButton:(UIButton*)sender{
     NSLog(@"click pinch ");
@@ -188,7 +262,7 @@
         isPlay = YES;
     }
 }
-#pragma mark - 小屏与全屏
+#pragma mark - 小屏与全屏 控制
 - (void)makeFullScreen{
     NSLog(@"make full screen");
     
@@ -256,44 +330,82 @@
     videoToolbarView.frame = CGRectMake(0, self.bounds.size.height - videoToolbarHeight, self.bounds.size.width, videoToolbarHeight);
     videoheadbarView.frame = CGRectMake(0,0, self.bounds.size.width, videoToolbarHeight);
 }
+#pragma mark - 时间轮循
+- (void)syncUIStatus{
+    if (!self.progressDragging) {
+        mCurPosition = [mMplayer getCurrentPosition];
 
+        [videoSlider setValue:(float)mCurPosition/mDuration];
+        
+        currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
+        
+        allTimeLabel.text = [self timeToHumanString:mDuration];
+        [allTimeLabel sizeToFit];
+        CGRect allTimeFrame = allTimeLabel.frame;
+        if(isFullScreen ==YES){
+            
+            allTimeFrame.origin.x = SCREEN_HEIGHT - 140 - allTimeLabel.frame.size.width;
+        }else{
+            
+            allTimeFrame.origin.x = SCREEN_WIDTH - 50 - allTimeLabel.frame.size.width;
+        }
+        
+        allTimeFrame.size.width = allTimeLabel.frame.size.width;
+        allTimeLabel.frame = allTimeFrame;
+    }
+}
 #pragma mark - VitamioDelegate
 - (void)mediaPlayer:(VMediaPlayer *)player didPrepared:(id)arg{
     //开始更新状态
 //    [self stopActivity];
 //    
-//    mDuration = [player getDuration];
-//    
-//    mSyncSeekTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(syncUIStatus) userInfo:nil repeats:YES];
+    mDuration = [player getDuration];
+    
+    mSyncSeekTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(syncUIStatus) userInfo:nil repeats:YES];
     
     [mMplayer setVideoFillMode:VMVideoFillModeStretch];
     
     [mMplayer start];
     
-//    [mMplayer seekTo:(long)(lastPlayTime * 1000)];
-//    
-//    NSLog(@"last play time === %d",lastPlayTime);
-//    
-//    videoEndImageView.hidden = YES;
-//    
-//    playOrPauseButton.userInteractionEnabled =YES;
-//    isPlay =YES;
-//    [playOrPauseButton setImage:btnPauseImage forState:UIControlStateNormal];// 改变播放按钮图片
+    [allTimeLabel setText:[self timeToHumanString:[player getDuration]]];
+    
+    playOrPauseButton.userInteractionEnabled =YES;
+    isPlay =YES;
+    [playOrPauseButton setImage:btnPauseImage forState:UIControlStateNormal];// 改变播放按钮图片
 }
 - (void)mediaPlayer:(VMediaPlayer *)player playbackComplete:(id)arg{
     
-//    _isComplate=YES;
-//    // 返回播放时间请求
-//    [self makeCurrentTimerRequest];
     
     [self stopMediaPlayer];
-//    videoEndImageView.hidden = NO;
 }
 
 - (void)mediaPlayer:(VMediaPlayer *)player setupManagerPreference:(id)arg
 {
     player.decodingSchemeHint = VMDecodingSchemeSoftware;
     player.autoSwitchDecodingScheme = NO;
+}
+- (void)mediaPlayer:(VMediaPlayer *)player error:(id)arg{
+    NSLog(@"VMediaPlayer Error = %@",arg);
+    
+    isPlay = NO;
+    [player reset];
+    [self clickPlayOrPauseButton];
+}
+#pragma mark - 时间转换
+-(NSString *)timeToHumanString:(unsigned long)ms
+{
+    unsigned long seconds, h, m, s;
+    char buff[128] = { 0 };
+    NSString *nsRet = nil;
+    
+    seconds = ms / 1000;
+    h = seconds / 3600;
+    m = (seconds - h * 3600) / 60;
+    s = seconds - h * 3600 - m * 60;
+    snprintf(buff, sizeof(buff), "%02ld:%02ld:%02ld", h, m, s);
+    nsRet = [[NSString alloc] initWithCString:buff
+                                     encoding:NSUTF8StringEncoding];
+    return nsRet;
 }
 
 - (void)dealloc

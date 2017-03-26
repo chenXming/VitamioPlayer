@@ -11,11 +11,14 @@
 @interface CXM_VitamioPlayer : UIView
 
 - (instancetype)initWithFrame:(CGRect)frame;
-
-
+/*
+ * 开始播放视频
+ */
 -(void)startMediaPlayer;
+/*
+ *结束播放
+ */
 -(void)stopMediaPlayer;
-
 
 
 @end

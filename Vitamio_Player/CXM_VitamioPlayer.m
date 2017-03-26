@@ -186,7 +186,7 @@
     [allTimeLabel setFont:[UIFont systemFontOfSize:9]];
     [allTimeLabel setBackgroundColor:[UIColor clearColor]];
     [allTimeLabel setTextColor: [UIColor whiteColor]];
-
+    [allTimeLabel setText:@"00:00:00"];
     [allTimeLabel sizeToFit];
     
     CGRect allTimeFrame = allTimeLabel.frame;
@@ -195,7 +195,7 @@
     [videoToolbarView addSubview:allTimeLabel];
     
     // 当前时间
-    currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(allTimeFrame.origin.x - 85,currentY,100,9)];
+    currentTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(allTimeFrame.origin.x - 45,currentY,100,9)];
     [currentTimeLabel setFont:[UIFont systemFontOfSize:9]];
     [currentTimeLabel setBackgroundColor:[UIColor clearColor]];
     [currentTimeLabel setTextColor:[UIColor whiteColor]];
@@ -251,12 +251,12 @@
     [mMplayer seekTo:(long)(sld.value * mDuration)];
 }
 - (void)progressSliderDownAction:(id)sender{
-    self.progressDragging = YES;
+    self.progressDragging = NO;
 }
 - (void)dragProgressSliderAction:(id)sender{
     UISlider* sld = (UISlider*)sender;
     
-    currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:(long)(sld.value * mCurPosition)]];
+    currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:(long)(sld.value * mDuration)]];
 }
 
 #pragma mark- Click Event
@@ -351,10 +351,22 @@
     UIImage* btnPinchImage = (isFullScreen == YES ? btnReduceImage : btnExpandImage);
     [pinchButton setImage:btnPinchImage forState:UIControlStateNormal];
     pinchButton.frame = CGRectMake(self.bounds.size.width - 15 - btnPinchImage.size.width, (videoToolbarHeight - btnPinchImage.size.height) / 2, btnPinchImage.size.width, btnPinchImage.size.height);
-    
+    CGRect sliderFrame;
+    CGRect allTimeFrame = allTimeLabel.frame;
+    if(isFullScreen==YES){
+        sliderFrame = CGRectMake(50, 13, (isFullScreen == YES ? SCREEN_HEIGHT : SCREEN_WIDTH) - 50-280/2, 2);
+        allTimeFrame.origin.x = SCREEN_HEIGHT - 140 - allTimeLabel.frame.size.width;
+    }else{
+        sliderFrame = CGRectMake(50, 13, (isFullScreen == YES ? SCREEN_HEIGHT : SCREEN_WIDTH) - 49*2, 2);
+        allTimeFrame.origin.x = SCREEN_WIDTH - 50 - allTimeLabel.frame.size.width;
+    }
+    videoProgressView.frame = sliderFrame;
     videoToolbarView.frame = CGRectMake(0, self.bounds.size.height - videoToolbarHeight, self.bounds.size.width, videoToolbarHeight);
     videoheadbarView.frame = CGRectMake(0,0, self.bounds.size.width, videoToolbarHeight);
-}
+    
+    currentTimeLabel.frame = CGRectMake(allTimeFrame.origin.x - 45,allTimeFrame.origin.y,100,9);
+    allTimeLabel.frame = allTimeFrame;
+   }
 #pragma mark - 时间轮循
 - (void)syncUIStatus{
     if (!self.progressDragging) {
@@ -365,18 +377,6 @@
         currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
         
         allTimeLabel.text = [self timeToHumanString:mDuration];
-        [allTimeLabel sizeToFit];
-        CGRect allTimeFrame = allTimeLabel.frame;
-        if(isFullScreen ==YES){
-            
-            allTimeFrame.origin.x = SCREEN_HEIGHT - 140 - allTimeLabel.frame.size.width;
-        }else{
-            
-            allTimeFrame.origin.x = SCREEN_WIDTH - 50 - allTimeLabel.frame.size.width;
-        }
-        
-        allTimeFrame.size.width = allTimeLabel.frame.size.width;
-        allTimeLabel.frame = allTimeFrame;
     }
 }
 #pragma mark - VitamioDelegate

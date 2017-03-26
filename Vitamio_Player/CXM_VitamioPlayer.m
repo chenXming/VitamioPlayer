@@ -92,6 +92,11 @@
         [self initData];
         
         [self makeMianUI];
+        
+        //监听屏幕旋转方向
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenChangeDirection:) name:UIDeviceOrientationDidChangeNotification object:nil];
+        
+
     }
     return self;
 }
@@ -136,8 +141,20 @@
     [videoheadbarView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]];
     videoheadbarView.userInteractionEnabled =YES;
     [self addSubview:videoheadbarView];
-
-
+    //播放缓存时间label
+    bufferTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height / 2 + 20, SCREEN_WIDTH, 14)];
+    [bufferTimeLabel setBackgroundColor:[UIColor clearColor]];
+    [bufferTimeLabel setTextColor:RGBACOLOR(29, 187, 214, 1)];
+    [bufferTimeLabel setFont:[UIFont systemFontOfSize:14]];
+    [bufferTimeLabel setTextAlignment:NSTextAlignmentCenter];
+    [self addSubview:bufferTimeLabel];
+    //视频播放activity
+    videoActivityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+   // videoActivityIndicatorView.backgroundColor = [UIColor lightGrayColor];
+    [videoActivityIndicatorView setCenter:self.center];
+    [self addSubview:videoActivityIndicatorView];
+    
+    
     //添加视频播放按钮
     btnPlayImage = [UIImage imageNamed:@"btn_play"];
     btnPauseImage = [UIImage imageNamed:@"btn_pause"];
@@ -223,6 +240,18 @@
         rateView.hidden=NO;
     }
 }
+#pragma mark - 缓冲label
+- (void)startActivityWithMsg:(NSString *)msg{
+    bufferTimeLabel.hidden = NO;
+    bufferTimeLabel.text = msg;
+    [videoActivityIndicatorView startAnimating];
+}
+- (void)stopActivity{
+    bufferTimeLabel.hidden = YES;
+    bufferTimeLabel.text = nil;
+    [videoActivityIndicatorView stopAnimating];
+}
+
 #pragma mark - 开始于结束控制
 -(void)startMediaPlayer{
 
@@ -274,7 +303,7 @@
         //正在播放  暂停
         [playOrPauseButton setImage:btnPlayImage forState:UIControlStateNormal];
         if ([videoActivityIndicatorView isAnimating]) {
-           // [self stopActivity];
+            [self stopActivity];
         }
         
         [mMplayer pause];
@@ -293,10 +322,10 @@
     
     isFullScreen = YES;
 
-   // [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
   
     appdelegate.nav.navigationBarHidden = YES;
-    
+
     [self setTransform:CGAffineTransformMakeRotation(M_PI_2)];
     
     //获取全屏时的坐标
@@ -313,9 +342,11 @@
 - (void)makeSmallScreen{
     isFullScreen = NO;
     
-  //  [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
     appdelegate.nav.navigationBarHidden = NO;
 
+    
     [self setTransform:CGAffineTransformMakeRotation(0)];
     
     [UIView animateWithDuration:0.35 animations:^{
@@ -338,14 +369,14 @@
         
         videoSlider.frame = CGRectMake(48,1, SCREEN_HEIGHT - 48-280/2, 25);
         
-      //  bufferTimeLabel.frame = CGRectMake(0, videoView.frame.size.width / 2 + 20, SCREEN_HEIGHT, 14);
+        bufferTimeLabel.frame = CGRectMake(0, self.frame.size.width / 2 + 20, SCREEN_HEIGHT, 14);
     }else{
 
         videoActivityIndicatorView.center = self.center;
         
         videoSlider.frame = CGRectMake(48, 1, SCREEN_WIDTH - 48 * 2, 25);
         
-      //  bufferTimeLabel.frame = CGRectMake(0, videoView.frame.size.height / 2 + 20, SCREEN_WIDTH, 14);
+       bufferTimeLabel.frame = CGRectMake(0, self.frame.size.height / 2 + 20, SCREEN_WIDTH, 14);
     }
     
     UIImage* btnPinchImage = (isFullScreen == YES ? btnReduceImage : btnExpandImage);
@@ -416,6 +447,137 @@
     [player reset];
     [self clickPlayOrPauseButton];
 }
+- (void)mediaPlayer:(VMediaPlayer *)player bufferingStart:(id)arg{
+    
+    [player pause];
+    [self startActivityWithMsg:@"缓冲...0%"];
+    self.progressDragging = YES;
+    [playOrPauseButton setImage:btnPlayImage forState:UIControlStateNormal];
+    playOrPauseButton.userInteractionEnabled=NO;
+    isPlay=NO;
+    //    NSLog(@"VMediaPlayer buffer start = %@",arg);
+}
+- (void)mediaPlayer:(VMediaPlayer *)player bufferingEnd:(id)arg{
+    
+    [player start];
+    [self stopActivity];
+    self.progressDragging = NO;
+    [playOrPauseButton setImage:btnPauseImage forState:UIControlStateNormal];
+    playOrPauseButton.userInteractionEnabled=YES;
+    isPlay=YES;
+}
+- (void)mediaPlayer:(VMediaPlayer *)player bufferingUpdate:(id)arg{
+    // NSLog(@"VMediaPlayer buffer update = %@",arg);
+    [self startActivityWithMsg:[NSString stringWithFormat:@"缓冲... %d%%",[((NSNumber *)arg) intValue]]];
+}
+- (void)mediaPlayer:(VMediaPlayer *)player downloadRate:(id)arg{
+    
+}
+- (void)mediaPlayer:(VMediaPlayer *)player info:(id)arg{
+    NSLog(@"VMediaPlayer info = %@",arg);
+}
+- (void)mediaPlayer:(VMediaPlayer *)player notSeekable:(id)arg{
+    self.progressDragging = NO;
+}
+- (void)mediaPlayer:(VMediaPlayer *)player setupPlayerPreference:(id)arg{
+    NSLog(@"VMediaPlayer setupPlayerPreference===");
+    [player setVideoQuality:VMVideoQualityHigh];
+    player.useCache = NO;
+    
+}
+#pragma mark - 屏幕旋转（重力感应） 通知事件
+-(void)screenChangeDirection:(NSNotification*)notify{
+    
+    UIDeviceOrientation  orient = [UIDevice currentDevice].orientation;
+    /*
+     UIDeviceOrientationUnknown,
+     UIDeviceOrientationPortrait,            // Device oriented vertically, home button on the bottom
+     UIDeviceOrientationPortraitUpsideDown,  // Device oriented vertically, home button on the top
+     UIDeviceOrientationLandscapeLeft,       // Device oriented horizontally, home button on the right
+     UIDeviceOrientationLandscapeRight,      // Device oriented horizontally, home button on the left
+     UIDeviceOrientationFaceUp,              // Device oriented flat, face up
+     UIDeviceOrientationFaceDown             // Device oriented flat, face down   */
+    
+    switch (orient)
+    {
+        case UIDeviceOrientationPortrait:{
+            appdelegate.nav.navigationBarHidden = NO;
+
+            [self makeSmallScreen];
+            
+        }
+            NSLog(@"上");
+            break;
+        case UIDeviceOrientationLandscapeLeft:{
+            
+            //掩饰掉用
+            [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerChangeScapeLeft) userInfo:nil repeats:NO];
+            
+        }
+            NSLog(@"左");
+            
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            NSLog(@"下");
+            
+            break;
+        case UIDeviceOrientationLandscapeRight:{
+            //掩饰掉用
+            [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(timerChangeScapeRight) userInfo:nil repeats:NO];
+            
+        }
+            NSLog(@"右");
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+-(void)timerChangeScapeLeft{
+    
+    isFullScreen = YES;
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    appdelegate.nav.navigationBarHidden = YES;
+
+    [self setTransform:CGAffineTransformMakeRotation(M_PI_2)];
+    
+    //获取全屏时的坐标
+    [UIView animateWithDuration:0.35 animations:^{
+        [self setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [self resetToolBarAndSubViewFrame];
+        titleLabel.frame =CGRectMake(50,12,SCREEN_HEIGHT-50,30);
+        titleLabel.textAlignment =NSTextAlignmentCenter;
+        
+    }];
+    
+    [self.superview bringSubviewToFront:self];
+    [mMplayer setVideoFillMode:VMVideoFillModeStretch];
+    
+}
+-(void)timerChangeScapeRight{
+    
+    isFullScreen = YES;
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
+    appdelegate.nav.navigationBarHidden = YES;
+
+    [self setTransform:CGAffineTransformMakeRotation(-M_PI_2)];
+    
+    //获取全屏时的坐标
+    [UIView animateWithDuration:0.35 animations:^{
+        [self setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        [self resetToolBarAndSubViewFrame];
+        titleLabel.frame =CGRectMake(50,12,SCREEN_HEIGHT-50,30);
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+    }];
+    [self.superview bringSubviewToFront:self];
+    [mMplayer setVideoFillMode:VMVideoFillModeStretch];
+    
+}
+
 #pragma mark - 时间转换
 -(NSString *)timeToHumanString:(unsigned long)ms
 {

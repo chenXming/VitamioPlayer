@@ -68,6 +68,8 @@
     UIView *rateView;
     
     AppDelegate *appdelegate;
+    float _origional; // 原始数据
+ 
 
 }
 // 是否正在拖拽
@@ -110,6 +112,8 @@
     isPlay = YES;
     _progressDragging = NO;
     isShowToolBar = YES;
+    _origional = 0.0f;
+    
 }
 -(void)makeMianUI{
 
@@ -316,7 +320,8 @@
     }
     
     CGPoint point= [sender locationInView:self];
-    
+    CGPoint tranPoint=[sender translationInView:self];
+
     typedef NS_ENUM(NSUInteger, UIPanGestureRecognizerDirection) {
         UIPanGestureRecognizerDirectionUndefined,
         UIPanGestureRecognizerDirectionUp,
@@ -327,8 +332,11 @@
     static UIPanGestureRecognizerDirection direction = UIPanGestureRecognizerDirectionUndefined;
     switch (sender.state) {
         case UIGestureRecognizerStateBegan: {
+            _origional = videoSlider.value;// 初始化
+
             if (direction == UIPanGestureRecognizerDirectionUndefined) {
                 CGPoint velocity = [sender velocityInView:self];
+                
                 BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
                 if (isVerticalGesture) {
                     if (velocity.y > 0) {
@@ -403,9 +411,18 @@
                         NSLog(@"Left");
                         _isGes =YES;
                         self.progressDragging = YES;
-                        [mMplayer seekTo:(long)mCurPosition-15000];
-                        currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
+                        
                     }
+                    // 手势滑动控制 快进进度
+                    if(tranPoint.x/SCREEN_HEIGHT +_origional <=0){
+                        
+                        videoSlider.value=0.0f;
+                    }else
+                    {
+                        videoSlider.value=tranPoint.x/SCREEN_HEIGHT+_origional;
+                    }
+                    
+                    currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:(long)(videoSlider.value * mDuration)]];
                     break;
                 }
                 case UIPanGestureRecognizerDirectionRight: {
@@ -413,9 +430,17 @@
                         NSLog(@"Right");
                         _isGes = YES;
                         self.progressDragging = YES;
-                        [mMplayer seekTo:(long)mCurPosition+15000];// 毫秒
-                        currentTimeLabel.text = [NSString stringWithFormat:@"%@/",[self timeToHumanString:mCurPosition]];
                     }
+                    
+                    if(tranPoint.x/SCREEN_HEIGHT +_origional <=0){
+                        
+                        videoSlider.value=0.0f;
+                    }else
+                    {
+                        videoSlider.value=tranPoint.x/SCREEN_HEIGHT+_origional;
+                    }
+                    
+                    currentTimeLabel.text =[NSString stringWithFormat:@"%@/",[self timeToHumanString:(long)(videoSlider.value * mDuration)]];
                     break;
                 }
                 default: {
@@ -427,6 +452,9 @@
         case UIGestureRecognizerStateEnded: {
             _isGes =NO;
             NSLog(@"end");
+            _origional = videoSlider.value;
+            [mMplayer seekTo:(long)(videoSlider.value * mDuration)];
+            
             direction = UIPanGestureRecognizerDirectionUndefined;
             [UIView animateWithDuration:0.5f animations:^{
                 blightView.alpha =0.0f;
@@ -707,6 +735,8 @@
     switch (orient)
     {
         case UIDeviceOrientationPortrait:{
+            [[UIApplication sharedApplication] setStatusBarHidden:YES];
+
             appdelegate.nav.navigationBarHidden = NO;
 
             [self makeSmallScreen];
@@ -744,8 +774,8 @@
     
     isFullScreen = YES;
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     appdelegate.nav.navigationBarHidden = YES;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
     [self setTransform:CGAffineTransformMakeRotation(M_PI_2)];
     
@@ -766,8 +796,8 @@
     
     isFullScreen = YES;
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     appdelegate.nav.navigationBarHidden = YES;
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 
     [self setTransform:CGAffineTransformMakeRotation(-M_PI_2)];
     

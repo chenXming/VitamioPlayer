@@ -1,7 +1,7 @@
 # VitamioPlayer
 iOS 基于第三方Vitamio视频播放开发的播放器。支持95%的视频格式，可播放本地与网络视频源 重力横屏、手势快进、左侧亮度、右侧音量控制等功能。<br>主要使用方法：
-![](https://github.com/chenXming/VitamioPlayer/raw/master/VitamioPlayer.gif)  
-
+![](https://github.com/chenXming/VitamioPlayer/raw/master/VitamioPlayer.gif) <br> 
+>使用CocoaPods集成Vitamio库参见我的GitHub:[VitamoSDK-iOS](https://github.com/chenXming/VitamioSDK-iOS)
 ```OC
 //获取本地视频路径
 NSString *docDir = [NSString stringWithFormat:@"%@/Documents", NSHomeDirectory()];

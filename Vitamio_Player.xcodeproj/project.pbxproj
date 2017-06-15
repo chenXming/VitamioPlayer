@@ -413,7 +413,7 @@
 				TargetAttributes = {
 					5FFC2A6D1E84C277000460AB = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = H588V6S763;
+						DevelopmentTeam = 2MUKD7395V;
 						ProvisioningStyle = Automatic;
 					};
 					5FFC2A861E84C277000460AB = {
@@ -659,7 +659,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H588V6S763;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2MUKD7395V;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Vitamio_Player/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -667,8 +669,9 @@
 					"$(PROJECT_DIR)/Vitamio_Player/Vitamio",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-Player";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wan.Vitamio-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -676,7 +679,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = H588V6S763;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 2MUKD7395V;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Vitamio_Player/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -684,8 +689,9 @@
 					"$(PROJECT_DIR)/Vitamio_Player/Vitamio",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wanshenglong.Vitamio-Player";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wan.Vitamio-Player";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
